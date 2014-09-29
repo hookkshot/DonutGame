@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour {
 
         transform.position = realPosition + shakePos;
 
-        if (Time.time > shakeUntil)
+        if (Time.time < shakeUntil)
         {
             float p = Random.Range(0f, 1f);
             if (p > 0.5f)

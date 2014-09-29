@@ -5,7 +5,7 @@ public class CharacterController : MonoBehaviour {
 
     CameraController cameraController;
 
-    Transform cameraTarget;
+    public Transform cameraTarget;
 
     void Awake()
     {
@@ -43,6 +43,7 @@ public class CharacterController : MonoBehaviour {
         if(Input.GetButtonDown("Jump"))
         {
             rigidbody2D.AddForce(new Vector2(0, 120));
+            //sd
         }
     }
 
