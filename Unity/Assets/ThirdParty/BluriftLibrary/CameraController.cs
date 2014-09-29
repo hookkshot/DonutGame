@@ -17,6 +17,8 @@ public class CameraController : MonoBehaviour {
 
     private float zLock;
 
+    
+
 
 	// Use this for initialization
 	void Start () {

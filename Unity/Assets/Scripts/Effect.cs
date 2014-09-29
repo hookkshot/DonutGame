@@ -3,9 +3,12 @@ using System.Collections;
 
 public class Effect : MonoBehaviour {
 
+    public string SortLayer = "";
+
 	// Use this for initialization
 	void Start () {
-	
+        if (renderer != null && SortLayer != "")
+            renderer.sortingLayerName = SortLayer;
 	}
 	
 	// Update is called once per frame
