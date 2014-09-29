@@ -47,7 +47,6 @@ public class MovingPlatform : MonoBehaviour {
 		}
 		transform.position += new Vector3 (horizontalDirection * Time.deltaTime, verticalDirection * Time.deltaTime, 0);
 		transform.Rotate (new Vector3 (0, 0, rotationSpeed));
-		transform.
 	
 	}
 }
