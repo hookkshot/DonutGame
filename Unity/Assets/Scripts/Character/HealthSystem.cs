@@ -107,16 +107,6 @@ public class HealthSystem : MonoBehaviour {
 	void Update()
 	{
         HitUpdate();
-
-		if(Health < HealthMax)
-		{
-			if(Time.time - lastDamage > RegenDelay && Time.time - lastHealthRegen > 0.5f)
-			{
-				Health += 1;
-				lastHealthRegen = Time.time;
-			}
-		}
-
 	}
 
 	void Die()

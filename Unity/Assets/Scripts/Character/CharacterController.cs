@@ -105,6 +105,11 @@ public class CharacterController : MonoBehaviour {
 
             fireLast = Time.time;
         }
+
+    }
+
+    private void GetInput()
+    {
     }
 
     void FixedUpdate()
