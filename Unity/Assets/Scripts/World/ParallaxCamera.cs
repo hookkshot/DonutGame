@@ -4,7 +4,7 @@ using System.Collections;
 public class ParallaxCamera : MonoBehaviour {
 
     public delegate void ParallaxCameraDelegate(float deltaMovement);
-    public ParallaxCameraDelegate onCameraTransition;
+    public ParallaxCameraDelegate onCameraTransitionX;
     private float oldPosition;
 
 	// Use this for initialization
@@ -14,12 +14,13 @@ public class ParallaxCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 	    if(transform.position.x != oldPosition)
         {
 
-            if(onCameraTransition != null)
+            if(onCameraTransitionX != null)
             {
-                onCameraTransition(oldPosition - transform.position.x);
+                onCameraTransitionX(oldPosition - transform.position.x);
             }
 
             oldPosition = transform.position.x;

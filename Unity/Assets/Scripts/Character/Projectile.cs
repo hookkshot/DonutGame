@@ -7,6 +7,10 @@ public class Projectile : MonoBehaviour {
 
     private float scale = 1;
 
+    public GameObject Owner;
+
+    public DamageType Damage;
+
 	// Use this for initialization
 	void Start () {
 	    if(RandomSize)
@@ -27,8 +31,19 @@ public class Projectile : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject == Owner)
+            return;
+        HealthSystem h = other.gameObject.GetComponent<HealthSystem>();
+
+        if (h != null)
+        {
+            h.TakeDamage(Damage, Owner);
+        }
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
         {
+
+
             transform.localScale = new Vector3(scale, scale, scale);
             Destroy(rigidbody2D);
             Destroy(this);
@@ -38,7 +53,7 @@ public class Projectile : MonoBehaviour {
 
             SpriteRenderer r = other.gameObject.GetComponent<SpriteRenderer>();
             SpriteRenderer pr = GetComponent<SpriteRenderer>();
-            if(r != null && pr != null)
+            if (r != null && pr != null)
             {
                 r.color = Color.Lerp(r.color, pr.color, Time.deltaTime);
             }

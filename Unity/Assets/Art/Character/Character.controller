@@ -162,6 +162,21 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110245334
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Tank2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: 3b76b3cbb98bbe44e90db716063756db, type: 2}
+  m_ParentStateMachine: {fileID: 110700000}
+  m_Position: {x: 418, y: 250, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110256017
 State:
   m_ObjectHideFlags: 3
@@ -177,6 +192,36 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110281355
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Tank3
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: 4cbd327283786ec4689f82efebfbfece, type: 2}
+  m_ParentStateMachine: {fileID: 110700000}
+  m_Position: {x: 453, y: 315, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110292018
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Tank1
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: 805c9c58eb35f0b438d1a1e185d688ba, type: 2}
+  m_ParentStateMachine: {fileID: 110700000}
+  m_Position: {x: 383, y: 185, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1107 &110700000
 StateMachine:
   serializedVersion: 2
@@ -189,6 +234,9 @@ StateMachine:
   - {fileID: 110200000}
   - {fileID: 110207840}
   - {fileID: 110256017}
+  - {fileID: 110292018}
+  - {fileID: 110245334}
+  - {fileID: 110281355}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:

@@ -25,6 +25,9 @@ public class CharacterController : MonoBehaviour {
     public GameObject GunPrefab;
     private float fireDelay = 0.05f;
     private float fireLast = 0;
+    public GameObject FireSound;
+    public float fireSoundDelay = 0.1f;
+    private float fireSoundLast = 0;
 
     void Awake()
     {
@@ -41,6 +44,7 @@ public class CharacterController : MonoBehaviour {
 	void Start () {
         health.Death += Death;
         health.Hit += Hit;
+        health.SpriteRenderer = spriteRenderer;
 	}
 	
 	// Update is called once per frame
@@ -61,13 +65,45 @@ public class CharacterController : MonoBehaviour {
             }
         }
 
-        if(Time.time > fireLast + fireDelay && Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1"))
+        {
+            Fire(new Color(0, 1, 0));
+        }
+
+        if (Input.GetButton("Fire2"))
+        {
+            Fire(new Color(1, 0, 0));
+        }
+    }
+
+    private void Fire(Color c)
+    {
+        if (Time.time > fireLast + fireDelay)
         {
             float dir = transform.localScale.x;
 
             GameObject p = (GameObject)GameObject.Instantiate(GunPrefab, AttackPosition.position, Quaternion.identity);
 
-            p.rigidbody2D.velocity = new Vector2(dir * Random.Range(4f,5f) + transform.rigidbody2D.velocity.x, Random.Range(0.2f, 1.8f));
+            p.rigidbody2D.velocity = new Vector2(dir * Random.Range(4f, 5f) + transform.rigidbody2D.velocity.x, Random.Range(0.2f, 1.8f));
+            SpriteRenderer r = p.GetComponent<SpriteRenderer>();
+            Projectile pro = p.GetComponent<Projectile>();
+
+            if(pro != null)
+            {
+                pro.Damage = new DamageType(0.2f, 0.2f);
+                pro.Owner = gameObject;
+            }
+
+            if (r != null)
+                r.color = c;
+
+            if (FireSound != null && fireSoundLast + fireSoundDelay < Time.time)
+            {
+                GameObject.Instantiate(FireSound, AttackPosition.position, Quaternion.identity);
+                fireSoundLast = Time.time;
+            }
+
+            fireLast = Time.time;
         }
     }
 
@@ -100,7 +136,7 @@ public class CharacterController : MonoBehaviour {
 		rigidbody2D.AddForce(new Vector2(0, jumpForce));
 	}
 
-    private void Hit(GameObject source, int damage)
+    private void Hit(GameObject source, float damage)
     {
         cameraController.Shake(1);
         hud.UpdateHealth(health.Health, health.HealthMax);

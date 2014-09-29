@@ -7,12 +7,16 @@ public class ParallaxManager : MonoBehaviour {
     private ParallaxCamera parallaxCamera;
     List<Parallax> layers = new List<Parallax>();
 
+    public GameObject character;
+
 	// Use this for initialization
 	void Start () {
         parallaxCamera = Camera.main.GetComponent<ParallaxCamera>();
 
         if (parallaxCamera != null)
-            parallaxCamera.onCameraTransition += Move;
+        {
+            parallaxCamera.onCameraTransitionX += Move;
+        }
 
         SetLayers();
 	}
@@ -31,13 +35,23 @@ public class ParallaxManager : MonoBehaviour {
             }
         }
 
+        
+
+    }
+
+    void Update()
+    {
+        if (false)
+        {
+            Vector3 p = transform.position;
+            p.y = character.transform.position.y;
+            transform.position = p;
+        }
     }
 
     void Move(float delta)
     {
-        Vector3 p = transform.position;
-        p.y = Camera.main.transform.position.y;
-        transform.position = p;
+        
         foreach(Parallax l in layers)
         {
             l.Move(delta);

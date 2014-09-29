@@ -17,15 +17,17 @@ public class HealthSystem : MonoBehaviour {
 	#region Fields
 
 	[SerializeField]
-	private int health = 0;
+	private float health = 0;
 	[SerializeField]
-	private int healthMax = 100;
+	private float healthMax = 100;
 
+
+    public SpriteRenderer SpriteRenderer;
 	#endregion
 
 	#region Properties
 
-	public int Health
+	public float Health
 	{
 		get { return health; }
 		set
@@ -33,17 +35,13 @@ public class HealthSystem : MonoBehaviour {
 			health = value;
 			if(health > healthMax)
 				health = healthMax;
-			if(Network.isServer)
-			{
-				if(networkView != null)
-					networkView.RPC("ChangeHealth", RPCMode.Others, health);
-				if(health <= 0)
-					Die();
-			}
+			if(health <= 0)
+				Die();
+
 		}
 	}
 
-	public int HealthMax
+	public float HealthMax
 	{
 		get { return healthMax; }
 		set { healthMax = value; }
@@ -53,10 +51,10 @@ public class HealthSystem : MonoBehaviour {
 
 	#region Events
 
-	public delegate void EventActionInt (int val);
+	public delegate void EventActionInt (float val);
 	public delegate void EventAction ();
 	//public delegate void HitAction (NetworkPlayer player, int damage);
-	public delegate void HitAction (GameObject source, int damage);
+	public delegate void HitAction (GameObject source, float damage);
 
 	public event EventAction Death;
 	public event HitAction Hit;
@@ -67,6 +65,7 @@ public class HealthSystem : MonoBehaviour {
     void Awake()
     {
         Health = HealthMax;
+        SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 	void Start()
@@ -83,7 +82,7 @@ public class HealthSystem : MonoBehaviour {
 	public void TakeDamage(DamageType damage, GameObject source)
 	{
 
-		int convertedDamage = damage.Damage + UnityEngine.Random.Range(0,damage.AltDamage);
+		float convertedDamage = damage.Damage + UnityEngine.Random.Range(0f,damage.AltDamage);
 
 
 		//If the even is not null raise the hit event with the converted Damage received
@@ -95,6 +94,8 @@ public class HealthSystem : MonoBehaviour {
 			lastDamage = Time.time;
 		}
 
+        SetHit();
+
         if (Hit != null)
             Hit(source, convertedDamage);
 	}
@@ -105,6 +106,7 @@ public class HealthSystem : MonoBehaviour {
 
 	void Update()
 	{
+        HitUpdate();
 
 		if(Health < HealthMax)
 		{
@@ -134,16 +136,40 @@ public class HealthSystem : MonoBehaviour {
 		}
 	}
 
+    private Color hitHighlight = new Color(1,0,0);
+    private Color hitNormal = new Color(1, 1, 1);
+    private bool hitFade = false;
+
+    public void SetHit()
+    {
+        hitFade = true;
+    }
+
+    private void HitUpdate()
+    {
+        if(SpriteRenderer != null)
+        {
+            if (hitFade)
+            {
+                SpriteRenderer.color = Color.Lerp(SpriteRenderer.color, hitHighlight, 1);
+                if (SpriteRenderer.color == hitHighlight)
+                    hitFade = false;
+            }
+            else if (SpriteRenderer.color != hitNormal)
+                SpriteRenderer.color = Color.Lerp(SpriteRenderer.color, hitNormal, Time.deltaTime*3);
+        }
+    }
+
 }
 
 [System.Serializable]
 public class DamageType
 {
 
-	public int Damage = 1;
-	public int AltDamage = 0;
+	public float Damage = 1;
+	public float AltDamage = 0;
 
-	public DamageType(int damage, int altDamage)
+	public DamageType(float damage, float altDamage)
 	{
 		Damage = damage;
 		AltDamage = altDamage;

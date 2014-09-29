@@ -379,6 +379,8 @@ MonoBehaviour:
   CharModel: {fileID: 100006}
   AttackPosition: {fileID: 400010}
   GunPrefab: {fileID: 100000, guid: 356896f6bb12f9948b4e34242a44857c, type: 2}
+  FireSound: {fileID: 100000, guid: 6073956a2ab634746bd565b81e385044, type: 2}
+  fireSoundDelay: .100000001
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

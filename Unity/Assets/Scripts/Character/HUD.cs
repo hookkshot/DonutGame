@@ -11,8 +11,8 @@ public class HUD : MonoBehaviour {
 
     }
 
-    public void UpdateHealth(int h, int m)
+    public void UpdateHealth(float h, float m)
     {
-        HealthText.text = h + " / " + m;
+        HealthText.text = (int)h + " / " + (int)m;
     }
 }
