@@ -131,6 +131,8 @@ MonoBehaviour:
     m_Bits: 512
   speed: 8
   jumpForce: 120
+  maxSpeed: {x: 15, y: 120}
+  JumpPrefab: {fileID: 100000, guid: 5729dc425c54b244b9e8aae30ab999a4, type: 2}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
