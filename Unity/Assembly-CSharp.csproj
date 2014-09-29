@@ -50,12 +50,14 @@
      <Compile Include="Assets\Scripts\Character\HUD.cs" />
      <Compile Include="Assets\Scripts\Character\HealthSystem.cs" />
      <Compile Include="Assets\Scripts\Character\Projectile.cs" />
-     <Compile Include="Assets\Scripts\Effect.cs" />
+     <Compile Include="Assets\Scripts\Effects\Effect.cs" />
+     <Compile Include="Assets\Scripts\Effects\TimedEffect.cs" />
+     <Compile Include="Assets\Scripts\Game.cs" />
+     <Compile Include="Assets\Scripts\InputControl.cs" />
      <Compile Include="Assets\Scripts\Menu.cs" />
      <Compile Include="Assets\Scripts\Mobs\BasicAttributes.cs" />
      <Compile Include="Assets\Scripts\Mobs\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\Platform\MovingPlatform.cs" />
-     <Compile Include="Assets\Scripts\TimedEffect.cs" />
      <Compile Include="Assets\Scripts\World\Parallax.cs" />
      <Compile Include="Assets\Scripts\World\ParallaxCamera.cs" />
      <Compile Include="Assets\Scripts\World\ParallaxManager.cs" />

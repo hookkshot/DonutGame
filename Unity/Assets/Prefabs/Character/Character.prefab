@@ -408,6 +408,9 @@ MonoBehaviour:
   CharModel: {fileID: 100006}
   AttackPosition: {fileID: 400010}
   GunPrefab: {fileID: 100000, guid: 356896f6bb12f9948b4e34242a44857c, type: 2}
+  FireSound: {fileID: 100000, guid: 6073956a2ab634746bd565b81e385044, type: 2}
+  fireSoundDelay: .100000001
+  PlayerNum: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -421,6 +424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   healthMax: 100
+  SpriteRenderer: {fileID: 0}
   RegenDelay: 1
 --- !u!114 &11400004
 MonoBehaviour:
@@ -584,7 +588,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 522196239
   m_SortingOrder: 6
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

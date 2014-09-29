@@ -29,6 +29,9 @@ public class CharacterController : MonoBehaviour {
     public float fireSoundDelay = 0.1f;
     private float fireSoundLast = 0;
 
+    public int PlayerNum = 0;
+    private InputControl control = null;
+
     void Awake()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
@@ -45,6 +48,12 @@ public class CharacterController : MonoBehaviour {
         health.Death += Death;
         health.Hit += Hit;
         health.SpriteRenderer = spriteRenderer;
+
+        if (Game.Players.Count > PlayerNum)
+            control = Game.Players[PlayerNum];
+
+        if (control == null)
+            control = new InputControl(ControlType.Controller1);
 	}
 	
 	// Update is called once per frame
@@ -57,7 +66,7 @@ public class CharacterController : MonoBehaviour {
                 health.TakeDamage(new DamageType(1,1), gameObject);
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (control.GetButton(ControlButton.Jump))
         {
             if (canJump)
             {
@@ -65,12 +74,12 @@ public class CharacterController : MonoBehaviour {
             }
         }
 
-        if (Input.GetButton("Fire1"))
+        if (control.GetButton(ControlButton.Shoot))
         {
             Fire(new Color(0, 1, 0));
         }
 
-        if (Input.GetButton("Fire2"))
+        if (control.GetButton(ControlButton.ShootAlt))
         {
             Fire(new Color(1, 0, 0));
         }
@@ -116,7 +125,7 @@ public class CharacterController : MonoBehaviour {
     {
 
         //This gets a float that is either negative or positive based on the buttons the plyaer is pressing
-        float hori = Input.GetAxisRaw("Horizontal");
+        float hori = control.GetAxis();
 
         animator.SetBool("Walking", hori != 0);
         animator.SetFloat("JumpForce", rigidbody2D.velocity.y);
