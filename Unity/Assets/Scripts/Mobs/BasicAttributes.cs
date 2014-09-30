@@ -4,18 +4,59 @@ using System.Collections;
 [RequireComponent(typeof(HealthSystem),typeof(Rigidbody2D),typeof(BoxCollider2D))]
 public class BasicAttributes : MonoBehaviour {
 
-	public int attackRange = 1;//How far away from the player until the mob attacks
-	public int viewDistance = 4;//How far the mob has to be until it will lock onto a player
-	public int attackStr = 1000000;//Int for determining damage
-	public float moveSpeed = 10;//Move speed of Mob
-	public Vector3 playerPosition;//Position of the player
-	public float waypoint = 4;//Where the mob is moving towards
-	public string mobName;
+	public bool WillWander = false;
+	public bool CanJump = false;
+	public bool Flying = false;
 
-	public float MoveInterval = 10;//How often it changes direction
-	float moveLast = 0;
+	private Vector3 targetPosition;
+	private GameObject targetPlayer;
 
-	public void Wander(){//Patrol method for a mob, should make it walk back and forward until it detects a player
+	private bool isGroundInfront = false;
+
+	public float AttackRange = 1;//How far away from the player until the mob attacks
+	public float ViewDistance = 4;//How far the mob has to be until it will lock onto a player
+	public DamageType Damage;
+	public float MoveSpeed = 10;//Move speed of Mob
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		Trigger (other);
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		Trigger (other);
+	}
+
+	private void Trigger(Collider2D other)
+	{
+		if(other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
+		{
+			isGroundInfront = true;
+		}
+
+		if(other.gameObject.layer == LayerMask.NameToLayer("Character"))
+		{
+			HealthSystem h = other.gameObject.GetComponent<HealthSystem>();
+
+			if(h != null)
+			{
+				h.TakeDamage(Damage, gameObject);
+				other.gameObject.rigidbody2D.AddForce(new Vector2(transform.localScale.x * MoveSpeed * 15,MoveSpeed*10));
+			}
+		}
+	}
+
+	private void Wander(){//Patrol method for a mob, should make it walk back and forward until it detects a player
+
+
+
+		transform.position += Vector3.right * MoveSpeed * Time.deltaTime * transform.localScale.x;
+
+		if (!isGroundInfront)
+			SwitchDirection ();
+
+		/*
 		float waypoint1 = waypoint;
 		bool isAttack = true;
 
@@ -28,10 +69,18 @@ public class BasicAttributes : MonoBehaviour {
 
 		Vector3 move = new Vector3 (waypoint - transform.position.x, 0, 0).normalized * Time.deltaTime * moveSpeed;
 		transform.position += move;
+		*/
+	}
 
+	void FixedUpdate()
+	{
+		if (WillWander && targetPlayer == null) Wander ();
+
+		isGroundInfront = false;
 	}
 
 	bool attackPlayer (){ //Detecting if the player is going to be attacked by the mob or not
+		/*
 		bool attRet = false;
 		float distance = GetPlayerDistance();
 
@@ -44,16 +93,23 @@ public class BasicAttributes : MonoBehaviour {
 			//Wander ();
 			return attRet;
 		}
-
+		*/
+		return false;
 	}
 	
 	// Use this for initialization
 	void Start () {
+		if (Flying)
+			rigidbody2D.gravityScale = 0;
+
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+
+		/*
 		attackPlayer ();
 
 		if(Time.time > moveLast + MoveInterval)
@@ -63,28 +119,29 @@ public class BasicAttributes : MonoBehaviour {
 		}
 
 		Move (moveSpeed);
+		*/
 	}
 
 	void Move(float direction)
 	{
-		transform.position += new Vector3(moveSpeed * Time.deltaTime,0,0);
+		/*
+		transform.position += new Vector3(moveSpeed * Time.deltaTime,0,0);*/
 	}
 
-	private float GetPlayerDistance()//How far away the mob is from the player
+	private float GetPlayerDistance(GameObject player)//How far away the mob is from the player
 	{
-		playerPosition = EnemyManager.Instance.Player.transform.position;
-		float distance = Vector2.Distance (playerPosition, transform.position);
+		float distance = Vector2.Distance (player.transform.position, transform.position);
 		return distance;
 	}
 
-	private Vector3 GetPlayerPosition()//Where the player is
+	private void GetPlayer()//Where the player is
 	{
-		playerPosition = EnemyManager.Instance.Player.transform.position;
-		return playerPosition;
 	}
 
 	private void SwitchDirection()
 	{
-		moveSpeed *= -1;
+		Vector3 s = transform.localScale;
+		s.x = s.x * -1;
+		transform.localScale = s;
 	}
 }

@@ -111,18 +111,13 @@ public class HealthSystem : MonoBehaviour {
 
 	void Die()
 	{
-		if(Network.isServer)
+		if(Death == null)
 		{
-			//Debug.Log("Player " + networkView.owner.ToString() + " died.");
-
-			if(Death == null)
-			{
-                Destroy(gameObject);
-			}
-			else
-			{
-				Death();
-			}
+            Destroy(gameObject);
+		}
+		else
+		{
+			Death();
 		}
 	}
 

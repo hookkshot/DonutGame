@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == Owner)
+        if (other.gameObject == Owner || other.gameObject.layer == LayerMask.NameToLayer("Projectiles"))
             return;
         HealthSystem h = other.gameObject.GetComponent<HealthSystem>();
 
@@ -40,13 +40,15 @@ public class Projectile : MonoBehaviour {
             h.TakeDamage(Damage, Owner);
         }
 
+        transform.localScale = new Vector3(scale, scale, scale);
+        Destroy(rigidbody2D);
+        Destroy(this);
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
         {
 
 
-            transform.localScale = new Vector3(scale, scale, scale);
-            Destroy(rigidbody2D);
-            Destroy(this);
+            
 
             if (other.tag == "MovingPlatform")
                 transform.parent = other.transform;
@@ -57,6 +59,11 @@ public class Projectile : MonoBehaviour {
             {
                 r.color = Color.Lerp(r.color, pr.color, Time.deltaTime);
             }
+        }
+
+        if(other.gameObject.layer == LayerMask.NameToLayer("AI"))
+        {
+            Destroy(gameObject);
         }
     }
 }
