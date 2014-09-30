@@ -161,6 +161,8 @@ public class CharacterController : MonoBehaviour {
         animator.SetFloat("JumpForce", rigidbody2D.velocity.y);
 
         hori *= speed;
+        if (HasPower(PowerType.Speed))
+            hori *= 2;
 
         //this adds force to the player
         rigidbody2D.AddForce(new Vector2(hori, 0));
@@ -188,7 +190,7 @@ public class CharacterController : MonoBehaviour {
     private void Hit(GameObject source, float damage)
     {
         cameraController.Shake(1);
-        hud.UpdateHealth(PlayerNum, health.Health, health.HealthMax);
+        HUD.Instance.UpdateHealth(PlayerNum, health.Health, health.HealthMax);
     }
 
     private void Death()
