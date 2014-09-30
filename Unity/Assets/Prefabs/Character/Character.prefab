@@ -410,6 +410,9 @@ MonoBehaviour:
   GunPrefab: {fileID: 100000, guid: 356896f6bb12f9948b4e34242a44857c, type: 2}
   FireSound: {fileID: 100000, guid: 6073956a2ab634746bd565b81e385044, type: 2}
   fireSoundDelay: .100000001
+  ReloadSound: {fileID: 100000, guid: 342d31f3aa8b860408eef154b5233313, type: 2}
+  AmmoCurrent: 1
+  AmmoMax: 100
   PlayerNum: 0
 --- !u!114 &11400002
 MonoBehaviour:
