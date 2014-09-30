@@ -9,8 +9,11 @@ public class FluidContainer : MonoBehaviour {
 	private const int MAX_CONTAINER_SIZE = 14; //The max amount of pixels the container can hold 
 	private GameObject[] ammoLiquid; //array of liquid objects
 	private int currentAmmoFill; //the last ammo checked for;
+	private Color currentColour;
 	// Use this for initialization
 	void Start () {
+		Color GooColour = transform.parent.parent.GetComponent<CharacterController>().GetColor();
+		currentColour = GooColour;
 		ammoLiquid = new GameObject[MAX_CONTAINER_SIZE];
 		//Calculate percent of current ammo
 		currentAmmoFill = ammoBlocks ();
@@ -53,6 +56,10 @@ public class FluidContainer : MonoBehaviour {
 		if (ind != -1) {
 						ammoLiquid [ind] = (GameObject)GameObject.Instantiate (liquidPrefab, new Vector3 (liquidPosition.transform.position.x, (transform.position.y - 0.120f) + (ind * (liquidPrefab.renderer.bounds.size.y * 0.3333f)), 0), transform.rotation);
 						ammoLiquid [ind].transform.parent = transform;
+			SpriteRenderer R = ammoLiquid[ind].GetComponent<SpriteRenderer>();
+			if(R != false){
+				R.color = currentColour;
+			}
 				}
 	}
 
@@ -83,7 +90,6 @@ public class FluidContainer : MonoBehaviour {
 		int currentAmmo = ammoBlocks ();
 		if (currentAmmo > currentAmmoFill) {
 			int index = findTop();
-			Debug.Log ("Adding " + index);
 					addLiquid (index);
 			if(currentAmmoFill != currentAmmo)
 			{
@@ -93,7 +99,6 @@ public class FluidContainer : MonoBehaviour {
 		}else if (currentAmmo < currentAmmoFill) {
 					int index = findTopDe ();
 					if(index > -1){
-				Debug.Log ("Deleting " + (index));
 						Destroy(ammoLiquid[index]);
 					}
 			if(currentAmmoFill != currentAmmo)
