@@ -4,6 +4,12 @@ using System.Collections;
 public class FallingBlock : MonoBehaviour {
 
 	public DamageType Damage;
+	public float HorizontalDirection = 0;
+	public float VerticalDirection = 0;
+	public float Speed = 0.05f;
+
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -23,14 +29,24 @@ public class FallingBlock : MonoBehaviour {
 			}
 			
 		}
-		
-		
-		
-		
-	}
 	
+	}
+
 	// Update is called once per frame
 	void Update () {
+		if (HorizontalDirection > 0) {
+			transform.position += new Vector3(Speed*Time.deltaTime,0,0);
+		}
+		if (HorizontalDirection < 0) {
+			transform.position -= new Vector3(Speed*Time.deltaTime,0,0);
+		}
+		if (VerticalDirection > 0) {
+			transform.position += new Vector3(0,Speed*Time.deltaTime,0);	
+		}
+		if (VerticalDirection < 0) {
+			transform.position -= new Vector3(0,Speed*Time.deltaTime,0);
+		}
+
 		if (transform.position.y < -10) {
 			Destroy(gameObject);		
 		}
