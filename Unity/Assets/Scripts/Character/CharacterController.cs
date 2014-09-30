@@ -29,6 +29,10 @@ public class CharacterController : MonoBehaviour {
     public float fireSoundDelay = 0.1f;
     private float fireSoundLast = 0;
 
+    //Ammo Stuff
+    public int AmmoCurrent = 1;
+    public int AmmoMax = 1;
+
     public int PlayerNum = 0;
     private InputControl control = null;
 
