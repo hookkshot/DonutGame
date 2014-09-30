@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpeedPickUp : MonoBehaviour {
-	public float Speed = 10;
+public class DamagePickUp : MonoBehaviour {
+
+
 	void Start () {
 		
 	}
@@ -16,10 +17,10 @@ public class SpeedPickUp : MonoBehaviour {
 		
 		if (other.gameObject.layer == LayerMask.NameToLayer("Character"))
 		{
-
-			other.GetComponent<CharacterController>().AddPower(new PlayerPower(2, 15, PowerType.Speed));
+			
+			other.GetComponent<CharacterController>().AddPower(new PlayerPower(2, 15, PowerType.Damage));
 			Destroy(gameObject);
-
+			
 		}
 	}
 }

@@ -4,15 +4,28 @@ using System.Collections;
 
 public class HUD : MonoBehaviour {
 
-    public Text HealthText;
+    public static HUD Instance;
+
+    public Slider[] PlayerSliders;
+    public RectTransform[] PlayerHUD;
 
 	void Awake()
     {
-
+        Instance = this;
     }
 
-    public void UpdateHealth(float h, float m)
+    void Start()
     {
-        //HealthText.text = (int)h + " / " + (int)m;
+        for(int i = 0; i < Game.ActivePlayerCount(); i++)
+        {
+            PlayerHUD[i].gameObject.SetActive(true);
+        }
     }
+
+    public void UpdateHealth(int player, float h, float m)
+    {
+        float p = ((h/m)*100);
+        PlayerSliders[player].value = p;
+    }
+
 }

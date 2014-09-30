@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(HealthSystem))]
 public class CharacterController : MonoBehaviour {
@@ -38,6 +39,8 @@ public class CharacterController : MonoBehaviour {
     public int PlayerNum = 0;
     private InputControl control = null;
 
+    public List<PlayerPower> Powers = new List<PlayerPower>();
+
     void Awake()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
@@ -73,6 +76,7 @@ public class CharacterController : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
+        UpdatePowers();
 
         //Debug stuff
         {
@@ -157,6 +161,8 @@ public class CharacterController : MonoBehaviour {
         animator.SetFloat("JumpForce", rigidbody2D.velocity.y);
 
         hori *= speed;
+        if (HasPower(PowerType.Speed))
+            hori *= 2;
 
         //this adds force to the player
         rigidbody2D.AddForce(new Vector2(hori, 0));
@@ -184,7 +190,7 @@ public class CharacterController : MonoBehaviour {
     private void Hit(GameObject source, float damage)
     {
         cameraController.Shake(1);
-        hud.UpdateHealth(health.Health, health.HealthMax);
+        HUD.Instance.UpdateHealth(PlayerNum, health.Health, health.HealthMax);
     }
 
     private void Death()
@@ -207,4 +213,81 @@ public class CharacterController : MonoBehaviour {
         if (other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
             canJump = false;
     }
+
+    #region Powers
+
+    public void AddPower(PlayerPower p)
+    {
+        for(int i = 0; i < Powers.Count; i++)
+        {
+            if (p.Type == Powers[i].Type)
+            {
+                p.Reset(p.Length);
+                return;
+            }
+        }
+        p.Reset(p.Length);
+        Powers.Add(p);
+    }
+
+    public bool HasPower(PowerType t)
+    {
+        for (int i = 0; i < Powers.Count; i++)
+        {
+            if (t == Powers[i].Type)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void UpdatePowers()
+    {
+        for(int i = Powers.Count-1; i >= 0; i++)
+        {
+            Powers[i].Update();
+            if (!Powers[i].Active)
+                Powers.RemoveAt(i);
+        }
+    }
+
+    #endregion
+}
+
+public class PlayerPower
+{
+    public PowerType Type = PowerType.Damage;
+    public bool Active = true;
+    public float Value = 2;
+    public float Length = 10;
+
+    private float until = 0;
+
+
+    public PlayerPower(float value, float time, PowerType type)
+    {
+        Type = type;
+        Length = time;
+        Value = value;
+
+        until = Time.time + time;
+    }
+
+    public void Update()
+    {
+        if (Time.time > until)
+            Active = false;
+    }
+
+    public void Reset(float time)
+    {
+        until = Time.time + time;
+    }
+}
+
+public enum PowerType
+{
+    Speed,
+    Damage
 }
