@@ -92,9 +92,10 @@ public class HealthSystem : MonoBehaviour {
 		{
 			Health -= convertedDamage;
 			lastDamage = Time.time;
+            SetHit();
 		}
 
-        SetHit();
+        
 
         if (Hit != null)
             Hit(source, convertedDamage);
@@ -102,7 +103,6 @@ public class HealthSystem : MonoBehaviour {
 
 	public float RegenDelay = 1;
 	private float lastDamage = 0;
-	private float lastHealthRegen = 0;
 
 	void Update()
 	{

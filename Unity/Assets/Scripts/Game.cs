@@ -19,6 +19,10 @@ public class Game : MonoBehaviour {
 
     void Start()
     {
+        
+
+
+
         for (int i = 0; i < Players.Length; i++)
         {
             if (Players[i] != null && PlayerPrefab != null)
@@ -27,6 +31,8 @@ public class Game : MonoBehaviour {
                 CharacterController c = g.GetComponent<CharacterController>();
 
                 c.PlayerNum = i;
+
+                EnemyManager.Instance.Player = g;
             }
         }
     }
