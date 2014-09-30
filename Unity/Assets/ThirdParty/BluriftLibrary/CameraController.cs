@@ -36,21 +36,33 @@ public class CameraController : MonoBehaviour {
         if (Targets.Count == 0)
             return;
 
+        
         Vector3 targetPos = new Vector3(0,0,0);
 
-        for (int i = 0; i < Targets.Count; i++)
+        for (int i = Targets.Count-1; i >= 0; i--)
         {
-            targetPos.x += Targets[i].position.x;
-            targetPos.y += Targets[i].position.y;
+            if (Targets[i] == null)
+            {
+                Targets.RemoveAt(i);
+            }
+            else
+            {
+                targetPos.x += Targets[i].position.x;
+                targetPos.y += Targets[i].position.y;
+            }
         }
 
-        targetPos.x /= Targets.Count;
-        targetPos.y /= Targets.Count;
+        if (targetPos != Vector3.zero)
+        {
+            targetPos.x /= Targets.Count;
+            targetPos.y /= Targets.Count;
 
-        targetPos.z = transform.position.z;
+            targetPos.z = transform.position.z;
 
-        if (LockCameraY)
-            targetPos.y = yLock;
+            if (LockCameraY)
+                targetPos.y = yLock;
+        }
+        else targetPos = realPosition;
 
         realPosition = Vector3.Lerp(realPosition, targetPos, Smoothness * Time.deltaTime);
 

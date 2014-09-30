@@ -41,6 +41,8 @@ public class CharacterController : MonoBehaviour {
 
     public List<PlayerPower> Powers = new List<PlayerPower>();
 
+    private Color playerColor = new Color(0,1,0);
+
     void Awake()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
@@ -177,7 +179,7 @@ public class CharacterController : MonoBehaviour {
 
     public Color GetColor()
     {
-        return spriteRenderer.color;
+        return playerColor;
     }
 
 	private void normalJump(){
@@ -216,8 +218,9 @@ public class CharacterController : MonoBehaviour {
 
     public void Respawn()
     {
-        transform.position = Game.Instance.StartPosition.position;
         health.Health -= 10;
+        transform.position = Game.Instance.StartPosition.position;
+        
     }
 
     #region Powers
