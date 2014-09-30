@@ -90,6 +90,22 @@ public class InputControl
 
         return x;
     }
+
+    public static ControlType GetInputType()
+    {
+        ControlType c =  ControlType.None;
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
+            c = ControlType.Controller1;
+        if (Input.GetKeyDown(KeyCode.Joystick2Button7))
+            c = ControlType.Controller2;
+        if (Input.GetKeyDown(KeyCode.Joystick3Button7))
+            c = ControlType.Controller3;
+        if (Input.GetKeyDown(KeyCode.Joystick4Button7))
+            c = ControlType.Controller4;
+        if (Input.GetKeyDown(KeyCode.Return))
+            c = ControlType.Keyboard;
+        return c;
+    }
 }
 
 public class ControlKey
@@ -111,6 +127,7 @@ public enum ControlType
     Controller2,
     Controller3,
     Controller4,
+    None
 }
 
 public enum ControlButton

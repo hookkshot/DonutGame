@@ -35,7 +35,12 @@ public class CharacterController : MonoBehaviour {
     void Awake()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
-        cameraController.Target = CameraTarget;
+
+        if (Game.ActivePlayerCount() > 1)
+            cameraController.AddTarget(transform);
+        else
+            cameraController.AddTarget(CameraTarget.transform);
+        
 
         animator = CharModel.GetComponent<Animator>();
         spriteRenderer = CharModel.GetComponent<SpriteRenderer>();
@@ -49,8 +54,11 @@ public class CharacterController : MonoBehaviour {
         health.Hit += Hit;
         health.SpriteRenderer = spriteRenderer;
 
-        if (Game.Players.Count > PlayerNum)
-            control = Game.Players[PlayerNum];
+        if (Game.Players.Length > PlayerNum)
+        {
+            if(Game.Players[PlayerNum] != null)
+                control = Game.Players[PlayerNum];
+        }
 
         if (control == null)
             control = new InputControl(ControlType.Controller1);
