@@ -202,7 +202,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.7623215, y: -12.0985031, z: 0}
+  m_LocalPosition: {x: 33.7696152, y: -2.65551519, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -374,7 +374,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Radius: .300000012
+  m_Radius: .289999992
   m_Center: {x: 0, y: -.200000003}
 --- !u!61 &6100000
 BoxCollider2D:
@@ -385,8 +385,8 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: .5, y: .75}
-  m_Center: {x: 0, y: 0}
+  m_Size: {x: .5, y: .699999988}
+  m_Center: {x: 0, y: .0799999982}
 --- !u!61 &6100002
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -397,7 +397,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Size: {x: .5, y: .150000006}
-  m_Center: {x: 0, y: -.449999988}
+  m_Center: {x: 0, y: -.469999999}
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -424,21 +424,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b2735fa9850fa46940792231373a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GroundCheck: {fileID: 400004}
-  CameraTarget: {fileID: 400002}
-  GroundMask:
-    serializedVersion: 2
-    m_Bits: 512
-  speed: 8
-  jumpForce: 450
-  maxSpeed: {x: 15, y: 120}
-  JumpPrefab: {fileID: 100000, guid: 5729dc425c54b244b9e8aae30ab999a4, type: 2}
   CharModel: {fileID: 100006}
+  Speed: 8.5
+  JumpForce: 450
   AttackPosition: {fileID: 400010}
-  GunPrefab: {fileID: 100000, guid: 356896f6bb12f9948b4e34242a44857c, type: 2}
-  FireSound: {fileID: 100000, guid: 6073956a2ab634746bd565b81e385044, type: 2}
+  CameraTarget: {fileID: 400002}
+  GroundCheck: {fileID: 400004}
   fireSoundDelay: .100000001
+  JumpPrefab: {fileID: 100000, guid: 5729dc425c54b244b9e8aae30ab999a4, type: 2}
   ReloadSound: {fileID: 100000, guid: 342d31f3aa8b860408eef154b5233313, type: 2}
+  FireSound: {fileID: 100000, guid: 6073956a2ab634746bd565b81e385044, type: 2}
+  GunPrefab: {fileID: 100000, guid: 356896f6bb12f9948b4e34242a44857c, type: 2}
   AmmoCurrent: 1
   AmmoMax: 100
   PlayerNum: 0

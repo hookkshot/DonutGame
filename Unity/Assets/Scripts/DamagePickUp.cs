@@ -17,8 +17,6 @@ public class DamagePickUp : MonoBehaviour {
 		
 		if (other.gameObject.layer == LayerMask.NameToLayer("Character"))
 		{
-			
-			other.GetComponent<CharacterController>().AddPower(new PlayerPower(2, 15, PowerType.Damage));
 			Destroy(gameObject);
 			
 		}

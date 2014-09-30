@@ -5,43 +5,50 @@ using System.Collections.Generic;
 [RequireComponent(typeof(HealthSystem))]
 public class CharacterController : MonoBehaviour {
 
-    CameraController cameraController;
-	public Transform GroundCheck;
-    public Transform CameraTarget;
-	public LayerMask GroundMask;
-	public float speed = 20;
-	public float jumpForce = 120;
-	public Vector2 maxSpeed = new Vector2(15, 80);
-	public GameObject JumpPrefab;
-
-    private bool canJump = false;
-
+    //Attached Systems
+    private CameraController cameraController;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     public GameObject CharModel;
     private HealthSystem health;
-    private HUD hud;
+    private InputControl control = null;
+    private Color playerColor = new Color(0, 1, 0);
 
+    //Movement Modifiers
+	public float Speed = 20;
+	public float JumpForce = 120;
+
+    //State Check
+    private bool canJump = false;
+   
+    //Targets
     public Transform AttackPosition;
-    public GameObject GunPrefab;
+    public Transform CameraTarget;
+    public Transform GroundCheck;
+    private InteractObject interactObject;
+    
+    //Projectiles Modifiers
     private float fireDelay = 0.05f;
     private float fireLast = 0;
-    public GameObject FireSound;
     public float fireSoundDelay = 0.1f;
     private float fireSoundLast = 0;
 
+    public Dictionary<PowerType, Power> Powers = new Dictionary<PowerType, Power>();
+    private PowerType currentPower = PowerType.Speed;
+
+    //Prefabs
+    public GameObject JumpPrefab;
     public GameObject ReloadSound;
+    public GameObject FireSound;
+    public GameObject GunPrefab;
 
     //Ammo Stuff
     public int AmmoCurrent = 1;
     public int AmmoMax = 1;
 
     public int PlayerNum = 0;
-    private InputControl control = null;
 
-    public List<PlayerPower> Powers = new List<PlayerPower>();
-
-    private Color playerColor = new Color(0,1,0);
+    
 
     void Awake()
     {
@@ -56,7 +63,6 @@ public class CharacterController : MonoBehaviour {
         animator = CharModel.GetComponent<Animator>();
         spriteRenderer = CharModel.GetComponent<SpriteRenderer>();
         health = GetComponent<HealthSystem>();
-        hud = GetComponent<HUD>();
     }
 
 	// Use this for initialization
@@ -73,6 +79,15 @@ public class CharacterController : MonoBehaviour {
 
         if (control == null)
             control = new InputControl(ControlType.Keyboard);
+
+        //Make the Ammo defaults
+        Powers.Add(PowerType.Speed, new Power(2, 2, new Color(0, 1, 0)));
+        Powers.Add(PowerType.Jump, new Power(1.5f, 2, new Color(0.3f, 0.3f, 1)));
+        Powers.Add(PowerType.Solid, new Power(2, 2, new Color(0, 1, 0)));
+        Powers.Add(PowerType.Sticky, new Power(2, 2, new Color(0, 1, 0)));
+        Powers.Add(PowerType.Weight, new Power(2, 2, new Color(0, 1, 0)));
+
+        SetPower(PowerType.Speed);
 	}
 	
 	// Update is called once per frame
@@ -84,24 +99,34 @@ public class CharacterController : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Q))
                 health.TakeDamage(new DamageType(1,1), gameObject);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                currentPower = PowerType.Speed;
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                currentPower = PowerType.Jump;
         }
 
         if (control.GetButton(ControlButton.Jump))
         {
             if (canJump)
             {
-                normalJump();
+                Jump();
             }
         }
 
         if (control.GetButton(ControlButton.Shoot))
         {
-            Fire(new Color(0, 1, 0));
+            Fire();
         }
 
         if (control.GetButton(ControlButton.ShootAlt))
         {
-            Fire(new Color(1, 0, 0));
+            Fire();
+        }
+
+        if(control.GetButton(ControlButton.Interact))
+        {
+            if(interactObject!= null)
+                interactObject.Interact(this);
         }
 
         if(control.GetButton(ControlButton.Reload))
@@ -115,7 +140,7 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    private void Fire(Color c)
+    private void Fire()
     {
         if (Time.time > fireLast + fireDelay && AmmoCurrent > 0)
         {
@@ -133,10 +158,11 @@ public class CharacterController : MonoBehaviour {
             {
                 pro.Damage = new DamageType(0.2f, 0.2f);
                 pro.Owner = gameObject;
+                pro.IcingType = currentPower;
             }
 
             if (r != null)
-                r.color = c;
+                r.color = GetColor();
 
             if (FireSound != null && fireSoundLast + fireSoundDelay < Time.time)
             {
@@ -149,10 +175,6 @@ public class CharacterController : MonoBehaviour {
 
     }
 
-    private void GetInput()
-    {
-    }
-
     void FixedUpdate()
     {
 
@@ -162,13 +184,14 @@ public class CharacterController : MonoBehaviour {
         animator.SetBool("Walking", hori != 0);
         animator.SetFloat("JumpForce", rigidbody2D.velocity.y);
 
-        hori *= speed;
-        if (HasPower(PowerType.Speed))
+        hori *= Speed;
+        if (PowerActive(PowerType.Speed))
             hori *= 2;
+
+        
 
         //this adds force to the player
         rigidbody2D.AddForce(new Vector2(hori, 0));
-
 
         if (hori > 0)
             transform.localScale = new Vector3(1, 1, 1);
@@ -179,14 +202,17 @@ public class CharacterController : MonoBehaviour {
 
     public Color GetColor()
     {
-        return playerColor;
+        return Powers[currentPower].Color();
     }
 
-	private void normalJump(){
+	private void Jump(){
 		if (JumpPrefab != null) {
 			GameObject.Instantiate(JumpPrefab, GroundCheck.position, Quaternion.identity);
 		}
-		rigidbody2D.AddForce(new Vector2(0, jumpForce));
+        float force = JumpForce;
+        if (PowerActive(PowerType.Jump))
+            force *= PowerValue(PowerType.Jump);
+		rigidbody2D.AddForce(new Vector2(0, force));
 	}
 
     private void Hit(GameObject source, float damage)
@@ -195,9 +221,18 @@ public class CharacterController : MonoBehaviour {
         HUD.Instance.UpdateHealth(PlayerNum, health.Health, health.HealthMax);
     }
 
-    private void Death()
+    public void SetPower(PowerType t)
     {
-        Destroy(gameObject);
+        currentPower = t;
+        AmmoCurrent = AmmoMax;
+    }
+
+    #region Collider Methods
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Dispenser"))
+            interactObject = other.gameObject.GetComponent<InteractObject>();
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -206,6 +241,14 @@ public class CharacterController : MonoBehaviour {
             transform.parent = other.transform;
         if(other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
             canJump = true;
+        if (other.gameObject.layer == LayerMask.NameToLayer("Icing"))
+        {
+            Projectile p = other.gameObject.GetComponent<Projectile>();
+            if(p != null)
+            {
+                ActivatePower(p.IcingType);
+            }
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -214,71 +257,88 @@ public class CharacterController : MonoBehaviour {
             transform.parent = null;
         if (other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
             canJump = false;
+        if (other.gameObject.layer == LayerMask.NameToLayer("Dispenser"))
+            interactObject = null;
+
     }
 
+    #endregion
+
+    #region Death and Respawn
+
+    /// <summary>
+    /// Respawns the player at either the center of the screen of the start of the map.
+    /// </summary>
     public void Respawn()
     {
         health.Health -= 10;
-        transform.position = Game.Instance.StartPosition.position;
-        
+        if (Game.ActivePlayerCount() > 1)
+            transform.position = Camera.main.transform.position;
+        else
+            transform.position = Game.Instance.StartPosition.position;
     }
+
+    private void Death()
+    {
+        gameObject.SetActive(false);
+    }
+
+    #endregion
 
     #region Powers
 
-    public void AddPower(PlayerPower p)
+
+    public bool PowerActive(PowerType t)
     {
-        for(int i = 0; i < Powers.Count; i++)
-        {
-            if (p.Type == Powers[i].Type)
-            {
-                p.Reset(p.Length);
-                return;
-            }
-        }
-        p.Reset(p.Length);
-        Powers.Add(p);
+        return Powers[t].IsActive();
     }
 
-    public bool HasPower(PowerType t)
+    public float PowerValue(PowerType t)
     {
-        for (int i = 0; i < Powers.Count; i++)
-        {
-            if (t == Powers[i].Type)
-            {
-                return true;
-            }
-        }
-        return false;
+        return Powers[t].Value();
+    }
+
+    public void ActivatePower(PowerType t)
+    {
+        Powers[t].Reset();
     }
 
     public void UpdatePowers()
     {
-        for(int i = Powers.Count-1; i >= 0; i--)
+        foreach(KeyValuePair<PowerType,Power> pair in Powers)
         {
-            Powers[i].Update();
-            if (!Powers[i].Active)
-                Powers.RemoveAt(i);
+            pair.Value.Update();
         }
     }
 
     #endregion
 }
 
-public class PlayerPower
+/// <summary>
+/// Power used by the player with attributes to check the value of the power and if it is active.
+/// </summary>
+public class Power
 {
-    public PowerType Type = PowerType.Damage;
-    public bool Active = true;
-    public float Value = 2;
-    public float Length = 10;
+
+    private Color color = new Color(0,1,0);
+    private bool active = false;
+    private float value = 2;
+    private float length = 10;
 
     private float until = 0;
 
-
-    public PlayerPower(float value, float time, PowerType type)
+    /// <summary>
+    /// Create a new Power
+    /// </summary>
+    /// <param name="value">The magnitude of the power.</param>
+    /// <param name="time">How long it lasts for when activates (In seconds).</param>
+    /// <param name="color">The color of the Power.</param>
+    public Power(float value, float time, Color color)
     {
-        Type = type;
-        Length = time;
-        Value = value;
+        this.active = false;
+        this.color = color;
+        this.length = time;
+        this.value = value;
 
         until = Time.time + time;
     }
@@ -286,17 +346,33 @@ public class PlayerPower
     public void Update()
     {
         if (Time.time > until)
-            Active = false;
+            active = false;
     }
 
-    public void Reset(float time)
+    public void Reset()
     {
-        until = Time.time + time;
+        active = true;
+        until = Time.time + length;
     }
+
+    #region Getters
+
+    public bool IsActive()
+    {
+        return active;
+    }
+
+    public float Value() { return value; }
+    public Color Color() { return color; }
+
+    #endregion
 }
 
 public enum PowerType
 {
     Speed,
-    Damage
+    Weight,
+    Jump,
+    Solid,
+    Sticky
 }

@@ -9,6 +9,9 @@ public class HUD : MonoBehaviour {
     public Slider[] PlayerSliders;
     public RectTransform[] PlayerHUD;
 
+    public Text TimerText;
+    private float start;
+
 	void Awake()
     {
         Instance = this;
@@ -20,12 +23,21 @@ public class HUD : MonoBehaviour {
         {
             PlayerHUD[i].gameObject.SetActive(true);
         }
+
+        
+    }
+
+    void Update()
+    {
+        TimerText.text = (Time.time - start).ToString();
     }
 
     public void UpdateHealth(int player, float h, float m)
     {
         float p = ((h/m)*100);
         PlayerSliders[player].value = p;
+
+        
     }
 
 }

@@ -41,11 +41,7 @@ public class CameraController : MonoBehaviour {
 
         for (int i = Targets.Count-1; i >= 0; i--)
         {
-            if (Targets[i] == null)
-            {
-                Targets.RemoveAt(i);
-            }
-            else
+            if (Targets[i].gameObject.activeInHierarchy)
             {
                 targetPos.x += Targets[i].position.x;
                 targetPos.y += Targets[i].position.y;
