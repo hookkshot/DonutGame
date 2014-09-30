@@ -3,6 +3,7 @@
 --- !u!78 &1
 TagManager:
   tags:
+  - MovingPlatform
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   Builtin Layer 7: 
   User Layer 8: Character
   User Layer 9: Platforms
-  User Layer 10: 
+  User Layer 10: Projectiles
   User Layer 11: 
   User Layer 12: 
   User Layer 13: 
@@ -37,7 +38,23 @@ TagManager:
   User Layer 30: 
   User Layer 31: 
   m_SortingLayers:
+  - name: Background
+    userID: 4
+    uniqueID: 3807171465
+    locked: 0
+  - name: World
+    userID: 3
+    uniqueID: 1732723465
+    locked: 0
   - name: Default
     userID: 0
     uniqueID: 0
+    locked: 0
+  - name: Character
+    userID: 1
+    uniqueID: 522196239
+    locked: 0
+  - name: Effects
+    userID: 2
+    uniqueID: 3637902977
     locked: 0

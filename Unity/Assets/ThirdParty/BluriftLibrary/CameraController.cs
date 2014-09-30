@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CameraController : MonoBehaviour {
 
-    public Transform Target;
+    public List<Transform> Targets;
     public float Smoothness = 5f;
     public float ShakeAmount = 1f;
     public float ShakeTime = 0.5f;
@@ -17,6 +18,8 @@ public class CameraController : MonoBehaviour {
 
     private float zLock;
 
+    
+
 
 	// Use this for initialization
 	void Start () {
@@ -27,10 +30,20 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Target == null)
+        if (Targets.Count == 0)
             return;
 
-        Vector3 targetPos = Target.position;
+        Vector3 targetPos = new Vector3(0,0,0);
+
+        for (int i = 0; i < Targets.Count; i++)
+        {
+            targetPos.x += Targets[i].position.x;
+            targetPos.y += Targets[i].position.y;
+        }
+
+        targetPos.x /= Targets.Count;
+        targetPos.y /= Targets.Count;
+
         targetPos.z = transform.position.z;
 
         realPosition = Vector3.Lerp(realPosition, targetPos, Smoothness * Time.deltaTime);
@@ -75,5 +88,15 @@ public class CameraController : MonoBehaviour {
     {
         realPosition = new Vector3(position.x, position.y, zLock);
         transform.position = realPosition;
+    }
+
+    public void ClearTargets()
+    {
+        Targets.Clear();
+    }
+
+    public void AddTarget(Transform t)
+    {
+        Targets.Add(t);
     }
 }
