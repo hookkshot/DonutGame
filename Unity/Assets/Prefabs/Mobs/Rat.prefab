@@ -10,11 +10,14 @@ GameObject:
   - 4: {fileID: 400000}
   - 212: {fileID: 21200000}
   - 114: {fileID: 11400002}
-  - 61: {fileID: 6100000}
   - 50: {fileID: 5000000}
   - 114: {fileID: 11400000}
   - 95: {fileID: 9500000}
-  m_Layer: 0
+  - 61: {fileID: 6100000}
+  - 61: {fileID: 6100002}
+  - 61: {fileID: 6100004}
+  - 61: {fileID: 6100006}
+  m_Layer: 11
   m_Name: Rat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +47,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.78010368, y: -2.0815177, z: 0}
+  m_LocalPosition: {x: 10.1993341, y: -2.98782921, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -84,10 +87,43 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
+  m_Material: {fileID: 6200000, guid: e0a078589bc2e274db5c824ff77a6e54, type: 2}
+  m_IsTrigger: 0
+  m_Size: {x: .5, y: .100000001}
+  m_Center: {x: 0, y: .300000012}
+--- !u!61 &6100002
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 1, y: 1}
-  m_Center: {x: 0, y: 0}
+  m_Size: {x: .5, y: .600000024}
+  m_Center: {x: 0, y: -.0500000007}
+--- !u!61 &6100004
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Size: {x: .100000001, y: .100000001}
+  m_Center: {x: .25, y: -.379999995}
+--- !u!61 &6100006
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Size: {x: .100000001, y: .400000006}
+  m_Center: {x: .25, y: 0}
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -129,14 +165,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725875b64f6c3054db08bf4a8d91c8e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1
-  viewDistance: 3
-  attackStr: 1
-  moveSpeed: 0
-  playerPosition: {x: 0, y: 0, z: 0}
-  waypoint: 4
-  mobName: Rat
-  MoveInterval: 1
+  WillWander: 1
+  CanJump: 0
+  Flying: 0
+  AttackRange: 1
+  ViewDistance: 4
+  Damage:
+    Damage: 1
+    AltDamage: 0
+  MoveSpeed: 2
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

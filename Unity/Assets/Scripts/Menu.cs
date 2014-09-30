@@ -62,6 +62,8 @@ public class Menu : MonoBehaviour {
 
     public void StartScreenStart()
     {
+        if (Game.Players[0] == null)
+            Game.Players[0] = new InputControl(ControlType.Keyboard);
         Application.LoadLevel(LEVEL_GAME);
     }
 
