@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 212: {fileID: 21200000}
   - 114: {fileID: 11400000}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MutantBakedGoods
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,14 +40,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725875b64f6c3054db08bf4a8d91c8e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1
-  viewDistance: 5
-  attackStr: 10
-  moveSpeed: 2
-  playerPosition: {x: 0, y: 0, z: 0}
-  waypoint: 4
-  mobName: Mutant Baked Goods
-  MoveInterval: 3
+  WillWander: 0
+  CanJump: 0
+  Flying: 0
+  AttackRange: 1
+  ViewDistance: 4
+  Damage:
+    Damage: 1
+    AltDamage: 0
+  MoveSpeed: 10
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

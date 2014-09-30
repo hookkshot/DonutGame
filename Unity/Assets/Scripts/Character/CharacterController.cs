@@ -29,6 +29,8 @@ public class CharacterController : MonoBehaviour {
     public float fireSoundDelay = 0.1f;
     private float fireSoundLast = 0;
 
+    public GameObject ReloadSound;
+
     //Ammo Stuff
     public int AmmoCurrent = 1;
     public int AmmoMax = 1;
@@ -65,7 +67,7 @@ public class CharacterController : MonoBehaviour {
         }
 
         if (control == null)
-            control = new InputControl(ControlType.Controller1);
+            control = new InputControl(ControlType.Keyboard);
 	}
 	
 	// Update is called once per frame
@@ -95,12 +97,24 @@ public class CharacterController : MonoBehaviour {
         {
             Fire(new Color(1, 0, 0));
         }
+
+        if(control.GetButton(ControlButton.Reload))
+        {
+            AmmoCurrent = AmmoMax;
+
+            if(ReloadSound != null)
+            {
+                GameObject.Instantiate(ReloadSound, transform.position, Quaternion.identity);
+            }
+        }
     }
 
     private void Fire(Color c)
     {
-        if (Time.time > fireLast + fireDelay)
+        if (Time.time > fireLast + fireDelay && AmmoCurrent > 0)
         {
+            AmmoCurrent--;
+
             float dir = transform.localScale.x;
 
             GameObject p = (GameObject)GameObject.Instantiate(GunPrefab, AttackPosition.position, Quaternion.identity);
@@ -153,6 +167,11 @@ public class CharacterController : MonoBehaviour {
         else if(hori<0)
             transform.localScale = new Vector3(-1, 1, 1);
         
+    }
+
+    public Color GetColor()
+    {
+        return spriteRenderer.color;
     }
 
 	private void normalJump(){
