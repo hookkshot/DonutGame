@@ -61,7 +61,7 @@ public class Projectile : MonoBehaviour {
             }
         }
 
-        if(other.gameObject.layer == LayerMask.NameToLayer("AI"))
+        if(other.gameObject.layer == LayerMask.NameToLayer("AI") || other.gameObject.layer == LayerMask.NameToLayer("Character"))
         {
             Destroy(gameObject);
         }

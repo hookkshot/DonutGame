@@ -17,15 +17,18 @@ public class CameraController : MonoBehaviour {
     private Vector3 shakePos = Vector3.zero;
 
     private float zLock;
+    private float yLock = 0;
 
+    public bool LockCameraY = false;
     
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         realPosition = transform.position;
         zLock = realPosition.z;
+        yLock = realPosition.y;
 	}
 	
 	// Update is called once per frame
@@ -45,6 +48,9 @@ public class CameraController : MonoBehaviour {
         targetPos.y /= Targets.Count;
 
         targetPos.z = transform.position.z;
+
+        if (LockCameraY)
+            targetPos.y = yLock;
 
         realPosition = Vector3.Lerp(realPosition, targetPos, Smoothness * Time.deltaTime);
 
@@ -87,6 +93,8 @@ public class CameraController : MonoBehaviour {
     public void Set(Vector2 position)
     {
         realPosition = new Vector3(position.x, position.y, zLock);
+        if (LockCameraY)
+            realPosition.y = yLock;
         transform.position = realPosition;
     }
 

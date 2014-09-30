@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Game : MonoBehaviour {
+    public static Game Instance;
+
     public static InputControl[] Players = new InputControl[2];
 
     public static int ActivePlayerCount()
@@ -16,6 +18,11 @@ public class Game : MonoBehaviour {
 
     public GameObject PlayerPrefab;
     public Transform StartPosition;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {

@@ -214,6 +214,12 @@ public class CharacterController : MonoBehaviour {
             canJump = false;
     }
 
+    public void Respawn()
+    {
+        transform.position = Game.Instance.StartPosition.position;
+        health.Health -= 10;
+    }
+
     #region Powers
 
     public void AddPower(PlayerPower p)
@@ -244,7 +250,7 @@ public class CharacterController : MonoBehaviour {
 
     public void UpdatePowers()
     {
-        for(int i = Powers.Count-1; i >= 0; i++)
+        for(int i = Powers.Count-1; i >= 0; i--)
         {
             Powers[i].Update();
             if (!Powers[i].Active)
