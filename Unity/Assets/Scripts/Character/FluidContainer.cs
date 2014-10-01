@@ -87,6 +87,19 @@ public class FluidContainer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		//Change the colour of goo
+		Color GooColour = transform.parent.parent.GetComponent<CharacterController>().GetColor();
+		if (GooColour != currentColour) {
+			currentColour = GooColour;
+			for(int i=0; i < MAX_CONTAINER_SIZE; i++){
+				if(ammoLiquid[i] != null){
+					Destroy (ammoLiquid[i]);
+					addLiquid(i);
+				}
+			}
+				}
+
 		int currentAmmo = ammoBlocks ();
 		if (currentAmmo > currentAmmoFill) {
 			int index = findTop();
@@ -95,7 +108,6 @@ public class FluidContainer : MonoBehaviour {
 			{
 				currentAmmoFill++;
 			}
-
 		}else if (currentAmmo < currentAmmoFill) {
 					int index = findTopDe ();
 					if(index > -1){
