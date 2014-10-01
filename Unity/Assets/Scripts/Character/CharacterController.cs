@@ -10,6 +10,7 @@ public class CharacterController : MonoBehaviour {
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     public GameObject CharModel;
+    public GameObject InteractLight;
     private HealthSystem health;
     private InputControl control = null;
     private Color playerColor = new Color(0, 1, 0);
@@ -231,8 +232,12 @@ public class CharacterController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Dispenser"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Dispenser"))
+        {
             interactObject = other.gameObject.GetComponent<InteractObject>();
+            if(interactObject != null)
+                InteractLight.SetActive(true);
+        }
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -258,7 +263,10 @@ public class CharacterController : MonoBehaviour {
         if (other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
             canJump = false;
         if (other.gameObject.layer == LayerMask.NameToLayer("Dispenser"))
+        {
             interactObject = null;
+            InteractLight.SetActive(false);
+        }
 
     }
 

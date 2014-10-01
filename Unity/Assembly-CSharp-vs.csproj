@@ -47,20 +47,29 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Character\CharacterController.cs" />
+     <Compile Include="Assets\Scripts\Character\FluidContainer.cs" />
      <Compile Include="Assets\Scripts\Character\HUD.cs" />
      <Compile Include="Assets\Scripts\Character\HealthSystem.cs" />
+     <Compile Include="Assets\Scripts\Character\InputControl.cs" />
      <Compile Include="Assets\Scripts\Character\Projectile.cs" />
+     <Compile Include="Assets\Scripts\DamagePickUp.cs" />
      <Compile Include="Assets\Scripts\Effects\Effect.cs" />
      <Compile Include="Assets\Scripts\Effects\TimedEffect.cs" />
      <Compile Include="Assets\Scripts\Game.cs" />
-     <Compile Include="Assets\Scripts\InputControl.cs" />
+     <Compile Include="Assets\Scripts\HealthPickUp.cs" />
      <Compile Include="Assets\Scripts\Menu.cs" />
      <Compile Include="Assets\Scripts\Mobs\BasicAttributes.cs" />
      <Compile Include="Assets\Scripts\Mobs\EnemyManager.cs" />
+     <Compile Include="Assets\Scripts\Platform\FallingBlock.cs" />
+     <Compile Include="Assets\Scripts\Platform\FallingSpawner.cs" />
      <Compile Include="Assets\Scripts\Platform\MovingPlatform.cs" />
+     <Compile Include="Assets\Scripts\SpeedPickUp.cs" />
+     <Compile Include="Assets\Scripts\World\IcingDispenser.cs" />
+     <Compile Include="Assets\Scripts\World\InteractObject.cs" />
      <Compile Include="Assets\Scripts\World\Parallax.cs" />
      <Compile Include="Assets\Scripts\World\ParallaxCamera.cs" />
      <Compile Include="Assets\Scripts\World\ParallaxManager.cs" />
+     <Compile Include="Assets\Scripts\World\WorldBottom.cs" />
      <Compile Include="Assets\ThirdParty\BluriftLibrary\BluStyle.cs" />
      <Compile Include="Assets\ThirdParty\BluriftLibrary\CameraController.cs" />
      <Compile Include="Assets\ThirdParty\BluriftLibrary\ColorPicker.cs" />
