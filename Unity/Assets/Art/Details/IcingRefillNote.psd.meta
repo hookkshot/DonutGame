@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: c2eb57d8a4fe6bb4299cd8852b393ca7
+guid: a7d27d54df0c2594fa5ea86d15e36c26
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Move5
+    21300000: IcingRefillNote
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -38,7 +38,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 64
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

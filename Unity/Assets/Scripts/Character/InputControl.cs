@@ -18,30 +18,40 @@ public class InputControl
                 Buttons.Add(ControlButton.Reload, new ControlKey(KeyCode.R, true));
                 Buttons.Add(ControlButton.Shoot, new ControlKey(KeyCode.Mouse0, false));
                 Buttons.Add(ControlButton.Interact, new ControlKey(KeyCode.F, true));
+                Buttons.Add(ControlButton.Start, new ControlKey(KeyCode.Return, true));
+                Buttons.Add(ControlButton.Back, new ControlKey(KeyCode.Escape, true));
                 break;
             case ControlType.Controller1:
                 Buttons.Add(ControlButton.Jump, new ControlKey(KeyCode.Joystick1Button0, true));
                 Buttons.Add(ControlButton.Reload, new ControlKey(KeyCode.Joystick1Button3, true));
                 Buttons.Add(ControlButton.Shoot, new ControlKey(KeyCode.Joystick1Button2, false));
                 Buttons.Add(ControlButton.Interact, new ControlKey(KeyCode.Joystick1Button1, true));
+                Buttons.Add(ControlButton.Start, new ControlKey(KeyCode.Joystick1Button7, true));
+                Buttons.Add(ControlButton.Back, new ControlKey(KeyCode.Joystick1Button6, true));
                 break;
             case ControlType.Controller2:
                 Buttons.Add(ControlButton.Jump, new ControlKey(KeyCode.Joystick2Button0, true));
                 Buttons.Add(ControlButton.Reload, new ControlKey(KeyCode.Joystick2Button3, true));
                 Buttons.Add(ControlButton.Shoot, new ControlKey(KeyCode.Joystick2Button2, false));
                 Buttons.Add(ControlButton.Interact, new ControlKey(KeyCode.Joystick2Button1, true));
+                Buttons.Add(ControlButton.Start, new ControlKey(KeyCode.Joystick2Button7, true));
+                Buttons.Add(ControlButton.Back, new ControlKey(KeyCode.Joystick2Button6, true));
                 break;
             case ControlType.Controller3:
                 Buttons.Add(ControlButton.Jump, new ControlKey(KeyCode.Joystick3Button0, true));
                 Buttons.Add(ControlButton.Reload, new ControlKey(KeyCode.Joystick3Button3, true));
                 Buttons.Add(ControlButton.Shoot, new ControlKey(KeyCode.Joystick3Button2, false));
                 Buttons.Add(ControlButton.Interact, new ControlKey(KeyCode.Joystick3Button1, true));
+                Buttons.Add(ControlButton.Start, new ControlKey(KeyCode.Joystick3Button7, true));
+                Buttons.Add(ControlButton.Back, new ControlKey(KeyCode.Joystick3Button6, true));
                 break;
             case ControlType.Controller4:
                 Buttons.Add(ControlButton.Jump, new ControlKey(KeyCode.Joystick4Button0, true));
                 Buttons.Add(ControlButton.Reload, new ControlKey(KeyCode.Joystick4Button3, true));
                 Buttons.Add(ControlButton.Shoot, new ControlKey(KeyCode.Joystick4Button2, false));
                 Buttons.Add(ControlButton.Interact, new ControlKey(KeyCode.Joystick4Button1, true));
+                Buttons.Add(ControlButton.Start, new ControlKey(KeyCode.Joystick4Button7, true));
+                Buttons.Add(ControlButton.Back, new ControlKey(KeyCode.Joystick4Button6, true));
                 break;
         }
     }
@@ -141,5 +151,7 @@ public enum ControlButton
     Shoot,
     ShootAlt,
     Reload,
-    Interact
+    Interact,
+    Start,
+    Back
 }

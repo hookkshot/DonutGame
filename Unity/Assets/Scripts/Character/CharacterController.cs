@@ -176,9 +176,8 @@ public class CharacterController : MonoBehaviour {
 
     }
 
-    void FixedUpdate()
+    void Move()
     {
-
         //This gets a float that is either negative or positive based on the buttons the plyaer is pressing
         float hori = control.GetAxis();
 
@@ -189,15 +188,21 @@ public class CharacterController : MonoBehaviour {
         if (PowerActive(PowerType.Speed))
             hori *= 2;
 
-        
+
 
         //this adds force to the player
         rigidbody2D.AddForce(new Vector2(hori, 0));
 
         if (hori > 0)
             transform.localScale = new Vector3(1, 1, 1);
-        else if(hori<0)
+        else if (hori < 0)
             transform.localScale = new Vector3(-1, 1, 1);
+    }
+
+    void FixedUpdate()
+    {
+
+        Move();
         
     }
 

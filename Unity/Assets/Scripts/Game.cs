@@ -44,3 +44,38 @@ public class Game : MonoBehaviour {
         }
     }
 }
+
+[System.Serializable]
+public class Profile
+{
+    public List<Level> Levels = new List<Level>();
+    public List<Bonus> Bonuses = new List<Bonus>();
+
+    public List<Bonus> GetBonuses(string level)
+    {
+        List<Bonus> list = new List<Bonus>();
+        foreach(Bonus b in Bonuses)
+        {
+            if (b.Level == level)
+                list.Add(b);
+        }
+        return list;
+    }
+}
+
+[System.Serializable]
+public class Bonus
+{
+    public string Level = "Level";
+    public bool Aquuired = false;
+}
+
+[System.Serializable]
+public class Level
+{
+    public string Name = "Level";
+    public float BestTime = float.MaxValue;
+
+}
+
+

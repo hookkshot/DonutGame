@@ -234,7 +234,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.455608368, y: -2.91169119, z: 0}
+  m_LocalPosition: {x: -2.24772668, y: -1.65305829, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -420,7 +420,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_FixedAngle: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
 --- !u!58 &5800000
@@ -519,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharModel: {fileID: 100006}
   InteractLight: {fileID: 100026}
-  Speed: 8.5
+  Speed: 10
   JumpForce: 450
   AttackPosition: {fileID: 400010}
   CameraTarget: {fileID: 400002}

@@ -89,7 +89,7 @@ public class Projectile : MonoBehaviour {
             SpriteRenderer pr = GetComponent<SpriteRenderer>();
             if (r != null && pr != null)
             {
-                r.color = Color.Lerp(r.color, pr.color, Time.deltaTime);
+                //r.color = Color.Lerp(r.color, pr.color, Time.deltaTime);
             }
         }
 
