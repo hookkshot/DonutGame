@@ -109,15 +109,15 @@ public class InputControl
     public static ControlType GetInputType()
     {
         ControlType c =  ControlType.None;
-        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7) && !Game.ControlInUse(ControlType.Controller1))
             c = ControlType.Controller1;
-        if (Input.GetKeyDown(KeyCode.Joystick2Button7))
+        if (Input.GetKeyDown(KeyCode.Joystick2Button7) && !Game.ControlInUse(ControlType.Controller2))
             c = ControlType.Controller2;
-        if (Input.GetKeyDown(KeyCode.Joystick3Button7))
+        if (Input.GetKeyDown(KeyCode.Joystick3Button7) && !Game.ControlInUse(ControlType.Controller3))
             c = ControlType.Controller3;
-        if (Input.GetKeyDown(KeyCode.Joystick4Button7))
+        if (Input.GetKeyDown(KeyCode.Joystick4Button7) && !Game.ControlInUse(ControlType.Controller4))
             c = ControlType.Controller4;
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && !Game.ControlInUse(ControlType.Keyboard))
             c = ControlType.Keyboard;
         return c;
     }

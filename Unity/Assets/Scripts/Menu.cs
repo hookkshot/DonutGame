@@ -10,18 +10,8 @@ public class Menu : MonoBehaviour {
     public Transform StartScreen;
     public Transform MainScreen;
 
-    public Button Player2Select;
-
-    public Toggle Player2Toggle;
-
-    public Text Player1ControlType;
-    public Text Player2ControlType;
-
-    public Text Player1TellInput;
-    public Text Player2TellInput;
-
-    private bool selectPlayer1 = false;
-    private bool selectPlayer2 = false;
+    public Text[] PlayerTellInput;
+    public Text[] PlayerControlType;
 
 	// Use this for initialization
 	void Start () {
@@ -31,28 +21,39 @@ public class Menu : MonoBehaviour {
 	void Update () {
         ControlType c = InputControl.GetInputType();
 
-        if (c == ControlType.None)
-            return;
-        if (selectPlayer1)
+        //New control select scheme
+        int player = Game.NextUnassignedPlayer();
+        if(PlayerTellInput.Length > player && player >= 0)
         {
-            Debug.Log("Control " + c.ToString());
-            Game.Players[0] = new InputControl(c);
-            selectPlayer1 = false;
-
-            Player1ControlType.text = c.ToString();
-            Player1TellInput.gameObject.SetActive(false);
+            if(c != ControlType.None)
+            {
+                Game.Players[player] = new InputControl(c);
+            }
         }
 
-        if (selectPlayer2)
-        {
+        FixPlayers();
 
-            Game.Players[1] = new InputControl(c);
-            selectPlayer2 = false;
-
-            Player2ControlType.text = c.ToString();
-            Player2TellInput.gameObject.SetActive(false);
-        }
 	}
+
+    private void FixPlayers()
+    {
+
+        for (int i = 0; i < Game.Players.Length; i++)
+        {
+            bool playerActive = Game.Players[i] != null;
+            PlayerTellInput[i].gameObject.SetActive(false);
+            PlayerControlType[i].gameObject.SetActive(playerActive);
+            if(playerActive)
+                PlayerControlType[i].text = Game.Players[i].Type.ToString();
+        }
+
+        int player = Game.NextUnassignedPlayer();
+        if(player != -1)
+        {
+            PlayerTellInput[player].gameObject.SetActive(true);
+            PlayerControlType[player].gameObject.SetActive(false);
+        }
+    }
 
     public void StartGame()
     {
@@ -63,7 +64,7 @@ public class Menu : MonoBehaviour {
     public void StartScreenStart()
     {
         if (Game.Players[0] == null)
-            Game.Players[0] = new InputControl(ControlType.Keyboard);
+            return;
         Application.LoadLevel(LEVEL_GAME);
     }
 
@@ -71,31 +72,6 @@ public class Menu : MonoBehaviour {
     {
         StartScreen.gameObject.SetActive(false);
         MainScreen.gameObject.SetActive(true);
-    }
-
-    public void SetInputP1()
-    {
-        selectPlayer1 = true;
-        selectPlayer2 = false;
-
-        Player1TellInput.gameObject.SetActive(true);
-    }
-
-    public void SetInputP2()
-    {
-        selectPlayer2 = true;
-        selectPlayer1 = false;
-
-        Player2TellInput.gameObject.SetActive(true);
-    }
-
-    public void ToggleP2(bool s)
-    {
-        bool val = Player2Toggle.isOn;
-        Player2Select.gameObject.SetActive(val);
-        Player2ControlType.gameObject.SetActive(val);
-        if (!val)
-            Game.Players[1] = null;
     }
 
     public void QuitGame()

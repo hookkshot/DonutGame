@@ -16,6 +16,45 @@ public class Game : MonoBehaviour {
         return c;
     }
 
+    /// <summary>
+    /// Checks teh game system whether their is already a specific control type being used by a player.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    public static bool ControlInUse(ControlType t)
+    {
+        for(int i = 0; i < Players.Length; i++)
+        {
+            if (Players[i] != null && Players[i].Type == t)
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Unnasigns a player from being controlled
+    /// </summary>
+    /// <param name="i">Index of the player to be unnassigned.</param>
+    public static void UnassignPlayer(int i)
+    {
+        Players[i] = null;
+    }
+
+    /// <summary>
+    /// Finds the next player slot which has not been assigned to a player yet.
+    /// </summary>
+    /// <returns>Index of the player to be assigned.</returns>
+    public static int NextUnassignedPlayer()
+    {
+        for (int i = 0; i < Players.Length; i++)
+        {
+            if (Players[i] == null)
+                return i;
+        }
+        return -1;
+    }
+
     public GameObject PlayerPrefab;
     public Transform StartPosition;
 
