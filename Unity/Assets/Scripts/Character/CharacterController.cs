@@ -64,6 +64,15 @@ public class CharacterController : MonoBehaviour {
         animator = CharModel.GetComponent<Animator>();
         spriteRenderer = CharModel.GetComponent<SpriteRenderer>();
         health = GetComponent<HealthSystem>();
+
+        //Make the Ammo defaults
+        Powers.Add(PowerType.Speed, new Power(1.5f, 2, new Color(0, 1, 0)));
+        Powers.Add(PowerType.Jump, new Power(1.5f, 2, new Color(0.3f, 0.3f, 1)));
+        Powers.Add(PowerType.Solid, new Power(2, 2, new Color(0, 1, 0)));
+        Powers.Add(PowerType.Sticky, new Power(2, 2, new Color(0, 1, 0)));
+        Powers.Add(PowerType.Weight, new Power(2, 2, new Color(0, 1, 0)));
+
+        SetPower(PowerType.Speed);
     }
 
 	// Use this for initialization
@@ -81,14 +90,7 @@ public class CharacterController : MonoBehaviour {
         if (control == null)
             control = new InputControl(ControlType.Keyboard);
 
-        //Make the Ammo defaults
-        Powers.Add(PowerType.Speed, new Power(2, 2, new Color(0, 1, 0)));
-        Powers.Add(PowerType.Jump, new Power(1.5f, 2, new Color(0.3f, 0.3f, 1)));
-        Powers.Add(PowerType.Solid, new Power(2, 2, new Color(0, 1, 0)));
-        Powers.Add(PowerType.Sticky, new Power(2, 2, new Color(0, 1, 0)));
-        Powers.Add(PowerType.Weight, new Power(2, 2, new Color(0, 1, 0)));
-
-        SetPower(PowerType.Speed);
+        
 	}
 	
 	// Update is called once per frame
@@ -186,17 +188,22 @@ public class CharacterController : MonoBehaviour {
 
         hori *= Speed;
         if (PowerActive(PowerType.Speed))
-            hori *= 2;
+            hori *= PowerValue(PowerType.Speed);
 
 
 
         //this adds force to the player
         rigidbody2D.AddForce(new Vector2(hori, 0));
 
+        float x = transform.localScale.x;
+
         if (hori > 0)
             transform.localScale = new Vector3(1, 1, 1);
         else if (hori < 0)
             transform.localScale = new Vector3(-1, 1, 1);
+
+        if (x != transform.localScale.x)
+            animator.SetTrigger("Switch");
     }
 
     void FixedUpdate()
