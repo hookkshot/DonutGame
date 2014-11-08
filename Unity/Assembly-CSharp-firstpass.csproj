@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{CD8C9303-404B-FB8D-6B9B-21988D5CAC0A}</ProjectGuid>
+	<ProjectGuid>{2662B409-6332-1E56-D797-C9025C53BDD6}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,44 +46,16 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Character\CharacterController.cs" />
-     <Compile Include="Assets\Scripts\Character\FluidContainer.cs" />
-     <Compile Include="Assets\Scripts\Character\HUD.cs" />
-     <Compile Include="Assets\Scripts\Character\HealthSystem.cs" />
-     <Compile Include="Assets\Scripts\Character\InputControl.cs" />
-     <Compile Include="Assets\Scripts\Character\Projectile.cs" />
-     <Compile Include="Assets\Scripts\DamagePickUp.cs" />
-     <Compile Include="Assets\Scripts\Effects\Effect.cs" />
-     <Compile Include="Assets\Scripts\Effects\TimedEffect.cs" />
-     <Compile Include="Assets\Scripts\Game.cs" />
-     <Compile Include="Assets\Scripts\HealthPickUp.cs" />
-     <Compile Include="Assets\Scripts\Menu.cs" />
-     <Compile Include="Assets\Scripts\Mobs\BasicAttributes.cs" />
-     <Compile Include="Assets\Scripts\Mobs\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\Platform\FallingBlock.cs" />
-     <Compile Include="Assets\Scripts\Platform\FallingSpawner.cs" />
-     <Compile Include="Assets\Scripts\Platform\MovingPlatform.cs" />
-     <Compile Include="Assets\Scripts\SpeedPickUp.cs" />
-     <Compile Include="Assets\Scripts\World\IcingDispenser.cs" />
-     <Compile Include="Assets\Scripts\World\InteractObject.cs" />
-     <Compile Include="Assets\Scripts\World\Parallax.cs" />
-     <Compile Include="Assets\Scripts\World\ParallaxCamera.cs" />
-     <Compile Include="Assets\Scripts\World\ParallaxManager.cs" />
-     <Compile Include="Assets\Scripts\World\WorldBottom.cs" />
-     <Compile Include="Assets\ThirdParty\BluriftLibrary\BluStyle.cs" />
-     <Compile Include="Assets\ThirdParty\BluriftLibrary\CameraController.cs" />
-     <Compile Include="Assets\ThirdParty\BluriftLibrary\ColorPicker.cs" />
-     <Compile Include="Assets\ThirdParty\BluriftLibrary\GameEventManager.cs" />
+     <Compile Include="Assets\Plugins\SteamWindows\Stats.cs" />
+     <Compile Include="Assets\Plugins\SteamWindows\Steamworks.cs" />
+     <Compile Include="Assets\Plugins\SteamWindows\User.cs" />
+     <Compile Include="Assets\Plugins\SteamWindows\Utils.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="SteamworksManaged">
  <HintPath>C:/Users/Keirron/Documents/GitHub/Gamejam/Unity/Assets/Plugins/SteamWindows/SteamworksManaged.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{2662B409-6332-1E56-D797-C9025C53BDD6}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
