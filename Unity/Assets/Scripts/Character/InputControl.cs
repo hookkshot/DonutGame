@@ -7,6 +7,10 @@ public class InputControl
     public ControlType Type = ControlType.Keyboard;
 
     private Dictionary<ControlButton, ControlKey> Buttons = new Dictionary<ControlButton, ControlKey>();
+    private Dictionary<ControlButton, ControlKey> ButtonAlts = new Dictionary<ControlButton, ControlKey>();
+
+    //Future proof
+    private Dictionary<KeyCode, ControlButton> ButtonDict = new Dictionary<KeyCode, ControlButton>();
 
     public InputControl(ControlType t)
     {
@@ -20,6 +24,8 @@ public class InputControl
                 Buttons.Add(ControlButton.Interact, new ControlKey(KeyCode.F, true));
                 Buttons.Add(ControlButton.Start, new ControlKey(KeyCode.Return, true));
                 Buttons.Add(ControlButton.Back, new ControlKey(KeyCode.Escape, true));
+
+                ButtonAlts.Add(ControlButton.Shoot, new ControlKey(KeyCode.RightControl, false));
                 break;
             case ControlType.Controller1:
                 Buttons.Add(ControlButton.Jump, new ControlKey(KeyCode.Joystick1Button0, true));
