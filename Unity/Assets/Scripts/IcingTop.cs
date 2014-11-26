@@ -31,7 +31,7 @@ public class IcingTop : MonoBehaviour {
 
     public void AddIcing()
     {
-        percent += 10;
+        percent += 0.7f;
         if (percent > 100)
             percent = 100;
         UpdateAnimator();

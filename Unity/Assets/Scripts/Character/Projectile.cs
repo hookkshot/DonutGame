@@ -62,40 +62,16 @@ public class Projectile : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == Owner || other.gameObject.layer == LayerMask.NameToLayer("Projectiles") || rigidbody2D.gravityScale == 0)
+        if (other.gameObject == Owner || other.gameObject.layer == LayerMask.NameToLayer("Projectiles"))
             return;
 
-        HealthSystem h = other.gameObject.GetComponent<HealthSystem>();
-
-        if (h != null)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Icing"))
         {
-            h.TakeDamage(Damage, Owner);
+            IcingTop icingTop = other.GetComponent<IcingTop>();
+
+            icingTop.AddIcing();
         }
 
-
-        if (other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
-        {
-
-            transform.localScale = new Vector3(scale, scale, scale);
-            rigidbody2D.velocity = new Vector2(0, 0);
-            rigidbody2D.gravityScale = 0;
-            Owner = null;
-            
-
-            if (other.tag == "MovingPlatform")
-                transform.parent = other.transform;
-
-            SpriteRenderer r = other.gameObject.GetComponent<SpriteRenderer>();
-            SpriteRenderer pr = GetComponent<SpriteRenderer>();
-            if (r != null && pr != null)
-            {
-                //r.color = Color.Lerp(r.color, pr.color, Time.deltaTime);
-            }
-        }
-
-        if(other.gameObject.layer == LayerMask.NameToLayer("AI") && rigidbody2D.gravityScale != 0)
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }
