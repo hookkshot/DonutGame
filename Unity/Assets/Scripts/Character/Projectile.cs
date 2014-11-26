@@ -19,8 +19,12 @@ public class Projectile : MonoBehaviour {
     private float fadeStart = -1;
     private float fadeEnd = 0;
 
+    private SpriteRenderer spriteRenderer;
+
 	// Use this for initialization
 	void Start () {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
 	    if(RandomSize)
         {
             scale = Random.Range(0.5f,1.2f);
@@ -69,7 +73,7 @@ public class Projectile : MonoBehaviour {
         {
             IcingTop icingTop = other.GetComponent<IcingTop>();
 
-            icingTop.AddIcing();
+            icingTop.AddIcing(spriteRenderer.color, IcingType);
         }
 
         Destroy(gameObject);

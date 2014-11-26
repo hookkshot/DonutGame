@@ -42,7 +42,7 @@ public class Menu : MonoBehaviour {
         {
             bool playerActive = Game.Players[i] != null;
             PlayerTellInput[i].gameObject.SetActive(false);
-            PlayerControlType[i].gameObject.SetActive(playerActive);
+            //PlayerControlType[i].gameObject.SetActive(playerActive);
             if(playerActive)
                 PlayerControlType[i].text = Game.Players[i].Type.ToString();
         }
@@ -51,7 +51,7 @@ public class Menu : MonoBehaviour {
         if(player != -1)
         {
             PlayerTellInput[player].gameObject.SetActive(true);
-            PlayerControlType[player].gameObject.SetActive(false);
+            //PlayerControlType[player].gameObject.SetActive(false);
         }
     }
 

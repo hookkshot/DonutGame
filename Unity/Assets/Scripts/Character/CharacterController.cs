@@ -260,11 +260,14 @@ public class CharacterController : MonoBehaviour {
             canJump = true;
         if (other.gameObject.layer == LayerMask.NameToLayer("Icing"))
         {
-            Projectile p = other.gameObject.GetComponent<Projectile>();
-            if(p != null)
+            IcingTop icing = other.GetComponent<IcingTop>();
+            if(icing != null)
             {
-                ActivatePower(p.IcingType);
+                PowerType p = icing.GetPower();
+                if(p != PowerType.None)
+                    ActivatePower(p);
             }
+            
         }
     }
 
@@ -394,5 +397,6 @@ public enum PowerType
     Weight,
     Jump,
     Solid,
-    Sticky
+    Sticky,
+    None
 }
